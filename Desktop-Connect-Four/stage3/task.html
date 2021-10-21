@@ -1,0 +1,116 @@
+<html>
+
+<h2>Description</h2>
+
+<p>Did you notice any problems with the last stage? If you accidentally enter a letter instead of a number, the program will crash. That wouldn&#39;t make for a very fun game if every time a player makes a typo, you have to start over from the beginning. In this stage we will account for user error with the input. This is extremely important for any program that takes user input because humans can easily make small mistakes, and we want to be able to deal with them. In this stage, we will fix our code so that users can try again if they enter a non-number value or if they enter a number that does not correspond to the column number. We will also give the users another chance to enter a different column if they one they chose is already full.</p>
+
+<h2>Objectives</h2>
+
+<p>In this stage your program should:</p>
+
+<ol>
+    <li>Be able to handle different kinds of user input without crashing.</li>
+    <li>Tell the user that the value is invalid if they&nbsp;enter in a non-number value or a number that isn&#39;t 1-7.</li>
+    <li>Tell the user that the column is full if they enter a column number that is already filled.</li>
+    <li>Give the user a chance to enter in another value in both of these cases.</li>
+</ol>
+
+<h2>Example</h2>
+
+<p>The greater-than symbol followed by a space (<code>&gt;&nbsp;</code>) represents the user input. Note that it&#39;s not part of the input.</p>
+
+<pre>
+<code class="language-no-highlight">1 2 3 4 5 6 7
+_ _ _ _ _ _ _
+_ _ _ _ _ _ _
+_ _ _ _ _ _ _
+_ _ _ _ _ _ _
+_ _ _ _ _ _ _
+_ _ _ _ _ _ _
+
+Enter column number: &gt; 6
+
+1 2 3 4 5 6 7
+_ _ _ _ _ _ _
+_ _ _ _ _ _ _
+_ _ _ _ _ _ _
+_ _ _ _ _ _ _
+_ _ _ _ _ _ _
+_ _ _ _ _ O _
+
+Enter column number: &gt; y
+
+Invalid input, try again.
+
+Enter column number: &gt; 6
+
+1 2 3 4 5 6 7
+_ _ _ _ _ _ _
+_ _ _ _ _ _ _
+_ _ _ _ _ _ _
+_ _ _ _ _ _ _
+_ _ _ _ _ O _
+_ _ _ _ _ O _
+
+Enter column number: &gt; 10
+
+Invalid input, try again.
+
+Enter column number: &gt; 6
+
+1 2 3 4 5 6 7
+_ _ _ _ _ _ _
+_ _ _ _ _ _ _
+_ _ _ _ _ _ _
+_ _ _ _ _ O _
+_ _ _ _ _ O _
+_ _ _ _ _ O _
+
+Enter column number:
+
+...
+
+1 2 3 4 5 6 7
+_ _ _ _ _ O _
+_ _ _ _ _ O _
+_ _ _ _ _ O _
+_ _ _ _ _ O _
+_ _ _ _ _ O _
+_ _ _ _ _ O _
+
+Enter column number: &gt; 6
+
+Column is already full, try again.
+
+Enter column number: &gt; 1
+
+1 2 3 4 5 6 7
+_ _ _ _ _ O _
+_ _ _ _ _ O _
+_ _ _ _ _ O _
+_ _ _ _ _ O _
+_ _ _ _ _ O _
+O _ _ _ _ O _
+
+...
+
+1 2 3 4 5 6 7
+O O _ O O O O
+O O O O O O O
+O O O O O O O
+O O O O O O O
+O O O O O O O
+O O O O O O O
+
+Enter column number: &gt; 3
+
+1 2 3 4 5 6 7
+O O O O O O O
+O O O O O O O
+O O O O O O O
+O O O O O O O
+O O O O O O O
+O O O O O O O
+
+Game over!</code></pre>
+</html>

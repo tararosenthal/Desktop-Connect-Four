@@ -1,0 +1,94 @@
+<html>
+
+<h2>Description</h2>
+
+<p>Now an empty game board isn&#39;t much use if we can&#39;t do anything with it. At this stage we will add two important features. The first is allowing the player to place game pieces. For the game of Connect Four, pieces are placed by column and then they fall down to rest either on the uppermost game piece in that column or, if it is empty, on the&nbsp;bottom of the board. So we will take a simple user input of the column number to place each game piece. We will only have one player for this stage, so we only need one type of game piece. The second feature we will add is allowing multiple input until the end of the game. In this one player version, the game can only end when the board is full, so we will keep the game going until then!</p>
+
+<h2>Objectives</h2>
+
+<p>In this stage, your program should:</p>
+
+<ol>
+    <li>First output the empty game board and request user input to choose a column number.</li>
+    <li>Place a game piece, in this case the letter &#39;O&#39;,&nbsp;in the chosen column and print the updated game board.</li>
+    <li>Continue to request user input and print the result until the board is full.</li>
+    <li>Finally, print the words, &quot;Game over!&quot;</li>
+</ol>
+
+<h2>Example</h2>
+
+<p>The greater-than symbol followed by a space (<code>&gt;&nbsp;</code>) represents the user input. Note that it&#39;s not part of the input.</p>
+
+<pre>
+<code class="language-no-highlight">1 2 3 4 5 6 7
+_ _ _ _ _ _ _
+_ _ _ _ _ _ _
+_ _ _ _ _ _ _
+_ _ _ _ _ _ _
+_ _ _ _ _ _ _
+_ _ _ _ _ _ _
+
+Enter column number: &gt; 6
+
+1 2 3 4 5 6 7
+_ _ _ _ _ _ _
+_ _ _ _ _ _ _
+_ _ _ _ _ _ _
+_ _ _ _ _ _ _
+_ _ _ _ _ _ _
+_ _ _ _ _ O _
+
+Enter column number: &gt; 1
+
+1 2 3 4 5 6 7
+_ _ _ _ _ _ _
+_ _ _ _ _ _ _
+_ _ _ _ _ _ _
+_ _ _ _ _ _ _
+_ _ _ _ _ _ _
+O _ _ _ _ O _
+
+Enter column number: &gt; 6
+
+1 2 3 4 5 6 7
+_ _ _ _ _ _ _
+_ _ _ _ _ _ _
+_ _ _ _ _ _ _
+_ _ _ _ _ _ _
+_ _ _ _ _ O _
+O _ _ _ _ O _
+
+Enter column number: &gt; 6
+
+1 2 3 4 5 6 7
+_ _ _ _ _ _ _
+_ _ _ _ _ _ _
+_ _ _ _ _ _ _
+_ _ _ _ _ O _
+_ _ _ _ _ O _
+O _ _ _ _ O _
+
+Enter column number:
+
+...
+
+1 2 3 4 5 6 7
+O O _ O O O O
+O O O O O O O
+O O O O O O O
+O O O O O O O
+O O O O O O O
+O O O O O O O
+
+Enter column number: &gt; 3
+
+1 2 3 4 5 6 7
+O O O O O O O
+O O O O O O O
+O O O O O O O
+O O O O O O O
+O O O O O O O
+O O O O O O O
+
+Game over!</code></pre>
+</html>

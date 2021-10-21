@@ -1,0 +1,168 @@
+<html>
+
+<h2>Description</h2>
+
+<p>Finally, we are ready to add a second player to our game! Changing the game to support two players requires a lot of refactoring. We must add another type of piece to the board so we know which player placed it. In the physical game, they are different colors, but in this desktop version, we will use different letters. We also need to switch players between turns so each person can get a fair chance at winning the game. Finally, we need to change the win conditions in the game. Previously, the game was over when the board was filled. Now we will need to check after each turn to see if either player has connected four pieces in a row. We need to do this in three directions: horizontally, vertically, and diagonally. After this stage, you will have a fully functioning game you can play with a friend!</p>
+
+<h2>Objectives</h2>
+
+<p>In this stage, your program should:</p>
+
+<ol>
+    <li>Switch turns between players after each move.</li>
+    <li>Represent Player 1's moves with the letter 'O' and Player 2 with the letter 'X'.</li>
+    <li>Give the current player a chance to re-do their move if invalid input is detected or column is already full.</li>
+    <li>Check after each move if either player has connected four in a row vertically, horizontally, or diagonally.</li>
+    <li>Once a winner has been detected, print the board one last time along with the words "Player X wins!", where X stands for 1 or 2.</li>
+</ol>
+
+<h2>Examples</h2>
+
+<p>The greater-than symbol followed by a space (<code>&gt; </code>) represents the user input. Note that it's not part of the input.</p>
+
+<p><strong>Example 1:</strong></p>
+
+<pre><code class="language-no-highlight">1 2 3 4 5 6 7
+_ _ _ _ _ _ _
+_ _ _ _ _ _ _
+_ _ _ _ _ _ _
+_ _ _ _ _ _ _
+_ _ _ _ _ _ _
+_ _ _ _ _ _ _
+
+Enter column number Player 1: &gt; 6
+
+1 2 3 4 5 6 7
+_ _ _ _ _ _ _
+_ _ _ _ _ _ _
+_ _ _ _ _ _ _
+_ _ _ _ _ _ _
+_ _ _ _ _ _ _
+_ _ _ _ _ O _
+
+Enter column number Player 2: &gt; y
+
+Invalid input, try again.
+
+Enter column number Player 2: &gt; 6
+
+1 2 3 4 5 6 7
+_ _ _ _ _ _ _
+_ _ _ _ _ _ _
+_ _ _ _ _ _ _
+_ _ _ _ _ _ _
+_ _ _ _ _ X _
+_ _ _ _ _ O _
+
+Enter column number Player 1: &gt; 10
+
+Invalid input, try again.
+
+Enter column number Player 1: &gt; 6
+
+1 2 3 4 5 6 7
+_ _ _ _ _ _ _
+_ _ _ _ _ _ _
+_ _ _ _ _ _ _
+_ _ _ _ _ O _
+_ _ _ _ _ X _
+_ _ _ _ _ O _
+
+Enter column number Player 2:
+
+...
+
+1 2 3 4 5 6 7
+_ _ _ _ _ X _
+_ _ _ _ _ O _
+_ _ _ _ _ X _
+_ _ _ _ _ O _
+_ _ _ _ _ X _
+_ _ _ _ _ O _
+
+Enter column number Player 1: &gt; 6
+
+Column is already full, try again.
+
+Enter column number Player 1: &gt; 1
+
+1 2 3 4 5 6 7
+_ _ _ _ _ X _
+_ _ _ _ _ O _
+_ _ _ _ _ X _
+_ _ _ _ _ O _
+_ _ _ _ _ X _
+O _ _ _ _ O _
+
+...
+
+1 2 3 4 5 6 7
+_ _ _ _ _ X _
+_ _ _ _ _ O _
+_ _ _ _ _ X _
+_ _ _ _ _ O _
+_ _ _ _ _ X X
+O X O O _ O X
+
+Enter column number Player 1: &gt; 5
+
+1 2 3 4 5 6 7
+_ _ _ _ _ X _
+_ _ _ _ _ O _
+_ _ _ _ _ X _
+_ _ _ _ _ O _
+_ _ _ _ _ X X
+O X O O O O X
+
+Player 1 wins!
+</code></pre>
+
+<p><strong>Example 2:</strong></p>
+
+<pre><code class="language-no-highlight">...
+
+1 2 3 4 5 6 7
+_ _ _ _ _ _ _
+_ _ _ _ _ _ _
+_ _ _ _ _ _ _
+X X O _ _ _ _
+X O O _ _ _ _
+X O O _ _ _ _
+
+Enter column number Player 2: &gt; 1
+
+1 2 3 4 5 6 7
+_ _ _ _ _ _ _
+_ _ _ _ _ _ _
+X _ _ _ _ _ _
+X X O _ _ _ _
+X O O _ _ _ _
+X O O _ _ _ _
+
+Player 2 wins!</code></pre>
+
+<p><strong>Example 3:</strong></p>
+
+<pre><code class="language-no-highlight">...
+
+1 2 3 4 5 6 7
+_ _ _ _ _ _ _
+_ _ _ _ _ _ _
+_ _ _ _ _ _ _
+_ _ O O _ _ _
+_ O X X _ _ _
+O X O X X _ _
+
+Enter column number, Player 1: &gt; 4
+
+1 2 3 4 5 6 7
+_ _ _ _ _ _ _
+_ _ _ _ _ _ _
+_ _ _ O _ _ _
+_ _ O O _ _ _
+_ O X X _ _ _
+O X O X X _ _
+
+Player 1 wins!
+</code></pre>
+</html>

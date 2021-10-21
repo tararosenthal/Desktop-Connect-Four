@@ -1,0 +1,12 @@
+type: hyperskill
+title: Desktop-Connect-Four
+language: English
+summary: |-
+  About
+  Tired of playing Tic-Tac-Toe? Want something a little more challenging? Connect Four is a great game that adds the complexity of a larger game board and the need to line up more pieces. In this project, you will create a version of the game you can run on your computer.
+
+  Learning outcomes
+  You will learn about multidimensional arrays, a variety of loops, and taking user input and printing output. You will make your own methods, check your program for errors and exceptions, and write a complicated algorithm to check the board for a winner after each turn.
+programming_language: Java
+content:
+- Desktop-Connect-Four
