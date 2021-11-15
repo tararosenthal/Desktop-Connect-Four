@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="Connect4Test" tests="1" skipped="0" failures="0" errors="0" timestamp="2021-11-10T22:02:02" hostname="DESKTOP-02MLGRN" time="34.502">
+  <properties/>
+  <testcase name="start" classname="Connect4Test" time="34.502"/>
+  <system-out><![CDATA[?[1;31m
+Start test 1?[0m
+?[1;31m
+Start test 2?[0m
+?[1;31m
+Start test 3?[0m
+?[1;31m
+Start test 4?[0m
+?[1;31m
+Start test 5?[0m
+?[1;31m
+Start test 6?[0m
+?[1;31m
+Start test 7?[0m
+?[1;31m
+Start test 8?[0m
+?[1;31m
+Start test 9?[0m
+?[1;31m
+Start test 10?[0m
+?[1;31m
+Start test 11?[0m
+?[1;31m
+Start test 12?[0m
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

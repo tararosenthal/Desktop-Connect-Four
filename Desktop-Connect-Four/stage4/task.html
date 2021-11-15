@@ -2,167 +2,52 @@
 
 <h2>Description</h2>
 
-<p>Finally, we are ready to add a second player to our game! Changing the game to support two players requires a lot of refactoring. We must add another type of piece to the board so we know which player placed it. In the physical game, they are different colors, but in this desktop version, we will use different letters. We also need to switch players between turns so each person can get a fair chance at winning the game. Finally, we need to change the win conditions in the game. Previously, the game was over when the board was filled. Now we will need to check after each turn to see if either player has connected four pieces in a row. We need to do this in three directions: horizontally, vertically, and diagonally. After this stage, you will have a fully functioning game you can play with a friend!</p>
+<p>In this stage, we will implement the final part of the code so that we can have a fully functioning game to play with a friend! To do that, you must write an algorithm to check after each click if either player has connected four pieces in a row. We need to do this in three directions: horizontally, vertically, and diagonally. When a winning move is detected, your program should highlight the four cells so that the players can easily see who has won. To do this, we will have a baseline color for the cells, set as their background, from the start of the game and a separate color for the winning cells. You can choose whichever colors you want for this as long as the baseline color and winning color are different. We also will add a reset button so that we can play the game again without restarting the application. Finally, you should ensure that your program can account for user errors. A click on an already full column should do nothing to the cells and should not change the player turn. Additionally, clicking on any cells in the board after a winner has been found, but before clicking the reset button, should do nothing.</p>
 
 <h2>Objectives</h2>
 
 <p>In this stage, your program should:</p>
 
 <ol>
-    <li>Switch turns between players after each move.</li>
-    <li>Represent Player 1's moves with the letter 'O' and Player 2 with the letter 'X'.</li>
-    <li>Give the current player a chance to re-do their move if invalid input is detected or column is already full.</li>
+    <li>Have a baseline color for all cells at the start of the application.</li>
+    <li>Have a reset button that extends JButton named ButtonReset. The button should be enabled.</li>
+    <li>Clicking the reset button should clear the text from all cells and return them to their baseline color.</li>
     <li>Check after each move if either player has connected four in a row vertically, horizontally, or diagonally.</li>
-    <li>Once a winner has been detected, print the board one last time along with the words "Player X wins!", where X stands for 1 or 2.</li>
+    <li>Once a winner has been detected, change the color of the four winning cells to the winning color.</li>
+    <li>The baseline color and the winning color should be two different colors.</li>
+    <li>Clicking on any cells in an already full column should do nothing and not change player turn.</li>
+    <li>Clicking on any cells on the board after a winner has been found, before clicking reset, should do nothing.</li>
 </ol>
 
 <h2>Examples</h2>
 
-<p>The greater-than symbol followed by a space (<code>&gt; </code>) represents the user input. Note that it's not part of the input.</p>
-
 <p><strong>Example 1:</strong></p>
 
-<pre><code class="language-no-highlight">1 2 3 4 5 6 7
-_ _ _ _ _ _ _
-_ _ _ _ _ _ _
-_ _ _ _ _ _ _
-_ _ _ _ _ _ _
-_ _ _ _ _ _ _
-_ _ _ _ _ _ _
+<p>After starting application:</p>
 
-Enter column number Player 1: &gt; 6
+<p><img alt="" height="1020" name="Stage 4 Board Start.jpg" src="https://ucarecdn.com/e3d4622c-1191-4b40-b6b9-41625e2d0434/" width="989"></p>
 
-1 2 3 4 5 6 7
-_ _ _ _ _ _ _
-_ _ _ _ _ _ _
-_ _ _ _ _ _ _
-_ _ _ _ _ _ _
-_ _ _ _ _ _ _
-_ _ _ _ _ O _
+<p>After clicking on cell A6 the first time:</p>
 
-Enter column number Player 2: &gt; y
+<p><img alt="" height="1024" name="Stage 4 First move.jpg" src="https://ucarecdn.com/197266de-cc00-4006-8f1c-afaf0545711c/" width="990"></p>
 
-Invalid input, try again.
+<p>After clicking on cell A6 the second time:</p>
 
-Enter column number Player 2: &gt; 6
+<p><img alt="" height="1022" name="Stage 4 Second move.jpg" src="https://ucarecdn.com/cf099ae7-1369-4e85-8cd0-ddf2fc737eb1/" width="982"></p>
 
-1 2 3 4 5 6 7
-_ _ _ _ _ _ _
-_ _ _ _ _ _ _
-_ _ _ _ _ _ _
-_ _ _ _ _ _ _
-_ _ _ _ _ X _
-_ _ _ _ _ O _
+<p>Several moves later:</p>
 
-Enter column number Player 1: &gt; 10
+<p><img alt="" height="1025" name="Stage 4 X wins horizontal.jpg" src="https://ucarecdn.com/02357097-0666-44f5-a73d-61760d3d86a3/" width="985"></p>
 
-Invalid input, try again.
+<p>After pressing Reset:</p>
 
-Enter column number Player 1: &gt; 6
+<p><img alt="" height="1020" name="Stage 4 Board Start.jpg" src="https://ucarecdn.com/7035f11f-283f-4f1c-8d99-be457ea27799/" width="989"></p>
 
-1 2 3 4 5 6 7
-_ _ _ _ _ _ _
-_ _ _ _ _ _ _
-_ _ _ _ _ _ _
-_ _ _ _ _ O _
-_ _ _ _ _ X _
-_ _ _ _ _ O _
+<p>After several moves:</p>
 
-Enter column number Player 2:
+<p><img alt="" height="1024" name="Stage 4 O wins vertical.jpg" src="https://ucarecdn.com/7983887d-8de9-4d51-8959-9a4314c42021/" width="991"></p>
 
-...
+<p>After resetting and playing several more moves:</p>
 
-1 2 3 4 5 6 7
-_ _ _ _ _ X _
-_ _ _ _ _ O _
-_ _ _ _ _ X _
-_ _ _ _ _ O _
-_ _ _ _ _ X _
-_ _ _ _ _ O _
-
-Enter column number Player 1: &gt; 6
-
-Column is already full, try again.
-
-Enter column number Player 1: &gt; 1
-
-1 2 3 4 5 6 7
-_ _ _ _ _ X _
-_ _ _ _ _ O _
-_ _ _ _ _ X _
-_ _ _ _ _ O _
-_ _ _ _ _ X _
-O _ _ _ _ O _
-
-...
-
-1 2 3 4 5 6 7
-_ _ _ _ _ X _
-_ _ _ _ _ O _
-_ _ _ _ _ X _
-_ _ _ _ _ O _
-_ _ _ _ _ X X
-O X O O _ O X
-
-Enter column number Player 1: &gt; 5
-
-1 2 3 4 5 6 7
-_ _ _ _ _ X _
-_ _ _ _ _ O _
-_ _ _ _ _ X _
-_ _ _ _ _ O _
-_ _ _ _ _ X X
-O X O O O O X
-
-Player 1 wins!
-</code></pre>
-
-<p><strong>Example 2:</strong></p>
-
-<pre><code class="language-no-highlight">...
-
-1 2 3 4 5 6 7
-_ _ _ _ _ _ _
-_ _ _ _ _ _ _
-_ _ _ _ _ _ _
-X X O _ _ _ _
-X O O _ _ _ _
-X O O _ _ _ _
-
-Enter column number Player 2: &gt; 1
-
-1 2 3 4 5 6 7
-_ _ _ _ _ _ _
-_ _ _ _ _ _ _
-X _ _ _ _ _ _
-X X O _ _ _ _
-X O O _ _ _ _
-X O O _ _ _ _
-
-Player 2 wins!</code></pre>
-
-<p><strong>Example 3:</strong></p>
-
-<pre><code class="language-no-highlight">...
-
-1 2 3 4 5 6 7
-_ _ _ _ _ _ _
-_ _ _ _ _ _ _
-_ _ _ _ _ _ _
-_ _ O O _ _ _
-_ O X X _ _ _
-O X O X X _ _
-
-Enter column number, Player 1: &gt; 4
-
-1 2 3 4 5 6 7
-_ _ _ _ _ _ _
-_ _ _ _ _ _ _
-_ _ _ O _ _ _
-_ _ O O _ _ _
-_ O X X _ _ _
-O X O X X _ _
-
-Player 1 wins!
-</code></pre>
+<p><img alt="" height="1022" name="Stage 4 X wins diagonal.jpg" src="https://ucarecdn.com/697e056b-05b4-4f8f-b26b-c0c79298e43e/" width="990"></p>
 </html>

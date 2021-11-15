@@ -2,93 +2,32 @@
 
 <h2>Description</h2>
 
-<p>Now an empty game board isn&#39;t much use if we can&#39;t do anything with it. At this stage we will add two important features. The first is allowing the player to place game pieces. For the game of Connect Four, pieces are placed by column and then they fall down to rest either on the uppermost game piece in that column or, if it is empty, on the&nbsp;bottom of the board. So we will take a simple user input of the column number to place each game piece. We will only have one player for this stage, so we only need one type of game piece. The second feature we will add is allowing multiple input until the end of the game. In this one player version, the game can only end when the board is full, so we will keep the game going until then!</p>
+<p>Now an empty game board isn't much use if we can't do anything with it. At this stage we will add two important features. The first is allowing the players to place game pieces. In the physical game, they are different colors, but in this desktop version, we will use different letters. We will use the uppercase letters "X" and "O" as the player pieces. The second feature we will add is alternating player turns by click so each person can get a fair chance at winning the game. At this stage, pieces will be placed in the cell where the player clicks and alternate which piece is placed after every click, starting with "X."</p>
 
 <h2>Objectives</h2>
 
 <p>In this stage, your program should:</p>
 
 <ol>
-    <li>First output the empty game board and request user input to choose a column number.</li>
-    <li>Place a game piece, in this case the letter &#39;O&#39;,&nbsp;in the chosen column and print the updated game board.</li>
-    <li>Continue to request user input and print the result until the board is full.</li>
-    <li>Finally, print the words, &quot;Game over!&quot;</li>
+    <li>First display an empty game board where each cell displays a single space " " as its label.</li>
+    <li>When a player clicks on a cell, that cell's label should change to display either "X" or "O" depending on the number of clicks, starting with "X".</li>
 </ol>
 
 <h2>Example</h2>
 
-<p>The greater-than symbol followed by a space (<code>&gt;&nbsp;</code>) represents the user input. Note that it&#39;s not part of the input.</p>
+<p>At start of application:</p>
 
-<pre>
-<code class="language-no-highlight">1 2 3 4 5 6 7
-_ _ _ _ _ _ _
-_ _ _ _ _ _ _
-_ _ _ _ _ _ _
-_ _ _ _ _ _ _
-_ _ _ _ _ _ _
-_ _ _ _ _ _ _
+<p><img alt="" height="987" name="Stage 2 Board Start.jpg" src="https://ucarecdn.com/9ba521dc-ec3b-44b3-acb8-ac5ebe0529b0/" width="1028"></p>
 
-Enter column number: &gt; 6
+<p>After clicking on cell A1:</p>
 
-1 2 3 4 5 6 7
-_ _ _ _ _ _ _
-_ _ _ _ _ _ _
-_ _ _ _ _ _ _
-_ _ _ _ _ _ _
-_ _ _ _ _ _ _
-_ _ _ _ _ O _
+<p><img alt="" height="986" name="Stage 2 First move.jpg" src="https://ucarecdn.com/a2fd4f77-b0ae-4ba1-b58a-763a3765b776/" width="1029"></p>
 
-Enter column number: &gt; 1
+<p>After clicking on cell A2,</p>
 
-1 2 3 4 5 6 7
-_ _ _ _ _ _ _
-_ _ _ _ _ _ _
-_ _ _ _ _ _ _
-_ _ _ _ _ _ _
-_ _ _ _ _ _ _
-O _ _ _ _ O _
+<p><img alt="" height="987" name="Stage 2 Second move.jpg" src="https://ucarecdn.com/cbd4ac30-f4f8-4ce7-ba80-f2dd425cdcc3/" width="1030"></p>
 
-Enter column number: &gt; 6
+<p>After filling the entire board:</p>
 
-1 2 3 4 5 6 7
-_ _ _ _ _ _ _
-_ _ _ _ _ _ _
-_ _ _ _ _ _ _
-_ _ _ _ _ _ _
-_ _ _ _ _ O _
-O _ _ _ _ O _
-
-Enter column number: &gt; 6
-
-1 2 3 4 5 6 7
-_ _ _ _ _ _ _
-_ _ _ _ _ _ _
-_ _ _ _ _ _ _
-_ _ _ _ _ O _
-_ _ _ _ _ O _
-O _ _ _ _ O _
-
-Enter column number:
-
-...
-
-1 2 3 4 5 6 7
-O O _ O O O O
-O O O O O O O
-O O O O O O O
-O O O O O O O
-O O O O O O O
-O O O O O O O
-
-Enter column number: &gt; 3
-
-1 2 3 4 5 6 7
-O O O O O O O
-O O O O O O O
-O O O O O O O
-O O O O O O O
-O O O O O O O
-O O O O O O O
-
-Game over!</code></pre>
+<p><img alt="" height="988" name="Stage 2 Last move.jpg" src="https://ucarecdn.com/f677aa17-078a-4ec2-99b1-3318a3edd93c/" width="1024"></p>
 </html>

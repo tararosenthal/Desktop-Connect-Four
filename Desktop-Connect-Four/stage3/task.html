@@ -2,115 +2,32 @@
 
 <h2>Description</h2>
 
-<p>Did you notice any problems with the last stage? If you accidentally enter a letter instead of a number, the program will crash. That wouldn&#39;t make for a very fun game if every time a player makes a typo, you have to start over from the beginning. In this stage we will account for user error with the input. This is extremely important for any program that takes user input because humans can easily make small mistakes, and we want to be able to deal with them. In this stage, we will fix our code so that users can try again if they enter a non-number value or if they enter a number that does not correspond to the column number. We will also give the users another chance to enter a different column if they one they chose is already full.</p>
+<p>Did you notice any problems with the last stage? If you clicked on a cell in the top row, that cell could be filled while the cells below it were still empty. In the game of Connect Four, pieces are placed by column and then they fall down to rest either on the uppermost game piece in that column or, if it is empty, on the bottom of the board. For this stage, we will defer the logic for placing game pieces in cells to a separate class that can check for the first free cell in each column in which to place a game piece. A click on any cell in the same column should have the same result.</p>
 
 <h2>Objectives</h2>
 
 <p>In this stage your program should:</p>
 
 <ol>
-    <li>Be able to handle different kinds of user input without crashing.</li>
-    <li>Tell the user that the value is invalid if they&nbsp;enter in a non-number value or a number that isn&#39;t 1-7.</li>
-    <li>Tell the user that the column is full if they enter a column number that is already filled.</li>
-    <li>Give the user a chance to enter in another value in both of these cases.</li>
+    <li>Fill the cells according to availability in the column and not by individual cell clicked on.</li>
+    <li>Continue to alternate between "X" and "O" pieces for each click.</li>
 </ol>
 
 <h2>Example</h2>
 
-<p>The greater-than symbol followed by a space (<code>&gt;&nbsp;</code>) represents the user input. Note that it&#39;s not part of the input.</p>
+<p>At start of application:</p>
 
-<pre>
-<code class="language-no-highlight">1 2 3 4 5 6 7
-_ _ _ _ _ _ _
-_ _ _ _ _ _ _
-_ _ _ _ _ _ _
-_ _ _ _ _ _ _
-_ _ _ _ _ _ _
-_ _ _ _ _ _ _
+<p><img alt="" height="987" name="Stage 2 Board Start.jpg" src="https://ucarecdn.com/3e59ad78-e3b7-4678-a026-6566ee1571c9/" width="1028"></p>
 
-Enter column number: &gt; 6
+<p>After clicking on cell A6 the first time:</p>
 
-1 2 3 4 5 6 7
-_ _ _ _ _ _ _
-_ _ _ _ _ _ _
-_ _ _ _ _ _ _
-_ _ _ _ _ _ _
-_ _ _ _ _ _ _
-_ _ _ _ _ O _
+<p><img alt="" height="986" name="Stage 2 First move.jpg" src="https://ucarecdn.com/db73b792-c71a-47e6-afe6-232ce3394a81/" width="1029"></p>
 
-Enter column number: &gt; y
+<p>After clicking on A6 the second time:</p>
 
-Invalid input, try again.
+<p><img alt="" height="987" name="Stage 2 Second move.jpg" src="https://ucarecdn.com/105cbcd0-3133-4ebc-bae7-5b6d489ceb24/" width="1030"></p>
 
-Enter column number: &gt; 6
+<p>After the board is full:</p>
 
-1 2 3 4 5 6 7
-_ _ _ _ _ _ _
-_ _ _ _ _ _ _
-_ _ _ _ _ _ _
-_ _ _ _ _ _ _
-_ _ _ _ _ O _
-_ _ _ _ _ O _
-
-Enter column number: &gt; 10
-
-Invalid input, try again.
-
-Enter column number: &gt; 6
-
-1 2 3 4 5 6 7
-_ _ _ _ _ _ _
-_ _ _ _ _ _ _
-_ _ _ _ _ _ _
-_ _ _ _ _ O _
-_ _ _ _ _ O _
-_ _ _ _ _ O _
-
-Enter column number:
-
-...
-
-1 2 3 4 5 6 7
-_ _ _ _ _ O _
-_ _ _ _ _ O _
-_ _ _ _ _ O _
-_ _ _ _ _ O _
-_ _ _ _ _ O _
-_ _ _ _ _ O _
-
-Enter column number: &gt; 6
-
-Column is already full, try again.
-
-Enter column number: &gt; 1
-
-1 2 3 4 5 6 7
-_ _ _ _ _ O _
-_ _ _ _ _ O _
-_ _ _ _ _ O _
-_ _ _ _ _ O _
-_ _ _ _ _ O _
-O _ _ _ _ O _
-
-...
-
-1 2 3 4 5 6 7
-O O _ O O O O
-O O O O O O O
-O O O O O O O
-O O O O O O O
-O O O O O O O
-O O O O O O O
-
-Enter column number: &gt; 3
-
-1 2 3 4 5 6 7
-O O O O O O O
-O O O O O O O
-O O O O O O O
-O O O O O O O
-O O O O O O O
-O O O O O O O
-
-Game over!</code></pre>
+<p><img alt="" height="988" name="Stage 2 Last move.jpg" src="https://ucarecdn.com/bf72ac05-7274-4ed7-b0b4-1feb8766c16b/" width="1024"></p>
 </html>

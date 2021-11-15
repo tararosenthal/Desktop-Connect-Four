@@ -1,6 +1,8 @@
 type: edu
 files:
-- name: src/connect4/Main.java
-  visible: true
 - name: test/Connect4Test.java
   visible: false
+- name: src/connect4/ApplicationRunner.java
+  visible: true
+- name: src/connect4/Connect4.java
+  visible: true

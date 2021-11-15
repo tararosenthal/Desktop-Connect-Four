@@ -1,236 +1,497 @@
+import org.assertj.swing.fixture.JButtonFixture;
 import org.hyperskill.hstest.dynamic.DynamicTest;
 import org.hyperskill.hstest.exception.outcomes.WrongAnswer;
-import org.hyperskill.hstest.stage.StageTest;
+import org.hyperskill.hstest.stage.SwingTest;
 import org.hyperskill.hstest.testcase.CheckResult;
-import org.hyperskill.hstest.testing.TestedProgram;
+import org.hyperskill.hstest.testing.swing.SwingComponent;
+import connect4.Connect4;
 
-import java.util.Arrays;
-import java.util.Objects;
+import javax.swing.JButton;
+import java.awt.*;
+import java.text.MessageFormat;
+import java.util.*;
+import java.util.List;
 
-public class Connect4Test extends StageTest {
-    static boolean player1 = true;
+import static java.util.stream.IntStream.range;
+import static org.hyperskill.hstest.testcase.CheckResult.correct;
+import static org.hyperskill.hstest.testcase.CheckResult.wrong;
 
-    @DynamicTest
-    CheckResult test1() {
-        TestedProgram main = new TestedProgram();
-        String output = main.start().strip().toLowerCase();
-        if (!gameBoardPrinted(output)) {
-            return CheckResult.wrong("Make sure to label the columns of your game board 1-7.");
-        }
-        String[][] gameBoard = getGameBoard(output);
-        if (!isBoardEmpty(gameBoard)) {
-            return CheckResult.wrong("Make sure to print '_' for all empty spaces on the board.");
-        }
-        if (checkPlayer(output)) {
-            return CheckResult.wrong("Make sure your program requests Player 1 to enter move first.");
-        }
-        String[] checkErrors = {"g", "20", "2 0", "1 f", "0", "8"};
-        for (String string: checkErrors) {
-            checkErrors(main.execute(string).strip().toLowerCase());
-        }
 
-        String[][] testBoard = createTestBoard();
-        for (int i = 0; i < 7; i++) {
-            output = main.execute("3").strip().toLowerCase();
-            if (i < 6) {
-                gameBoard = getGameBoard(output);
-                updateTestBoard(testBoard, 3);
-                compareBoards(gameBoard, testBoard);
-                player1 = !player1;
+
+
+class OsCheck {
+
+    public static void main(String[] args) {
+        System.out.println(
+                System.getProperty(
+                                "os.name", "generic")
+                        .toLowerCase(Locale.ENGLISH)
+        );
+    }
+
+    /**
+     * types of Operating Systems
+     */
+    public enum OSType {
+        Windows, MacOS, Linux, Other
+    };
+
+    // cached result of OS detection
+    protected static OSType detectedOS;
+
+    public static OSType getOperatingSystemType() {
+        if (detectedOS == null) {
+            String OS = System.getProperty(
+                            "os.name", "generic")
+                    .toLowerCase(Locale.ENGLISH);
+            if ((OS.contains("mac"))
+                    || (OS.contains("darwin"))) {
+                detectedOS = OSType.MacOS;
+            } else if (OS.contains("win")) {
+                detectedOS = OSType.Windows;
+            } else if (OS.contains("nux")) {
+                detectedOS = OSType.Linux;
+            } else {
+                detectedOS = OSType.Other;
             }
         }
-        checkFull(output);
-        player1 = true;
-        if (checkPlayer(output)) {
-            return CheckResult.wrong("Make sure your program requests additional input from the same player " +
-                    "after invalid or full column input is entered.");
-        }
-        return CheckResult.correct();
+        return detectedOS;
+    }
+}
+
+public class Connect4Test extends SwingTest {
+    private static final String EMPTY_CELL = " ";
+    private static final String MARK_X = "X";
+    private static final String MARK_O = "O";
+    private static final int NUM_OF_ROWS = 6;
+    private static final int NUM_OF_COLUMNS = 7;
+    private static int playerCount = 0;
+
+    public Connect4Test() {
+        super(new Connect4());
     }
 
-    @DynamicTest
+    @SwingComponent
+    private JButtonFixture buttonA1;
+    @SwingComponent
+    private JButtonFixture buttonA2;
+    @SwingComponent
+    private JButtonFixture buttonA3;
+    @SwingComponent
+    private JButtonFixture buttonA4;
+    @SwingComponent
+    private JButtonFixture buttonA5;
+    @SwingComponent
+    private JButtonFixture buttonA6;
+    @SwingComponent
+    private JButtonFixture buttonB1;
+    @SwingComponent
+    private JButtonFixture buttonB2;
+    @SwingComponent
+    private JButtonFixture buttonB3;
+    @SwingComponent
+    private JButtonFixture buttonB4;
+    @SwingComponent
+    private JButtonFixture buttonB5;
+    @SwingComponent
+    private JButtonFixture buttonB6;
+    @SwingComponent
+    private JButtonFixture buttonC1;
+    @SwingComponent
+    private JButtonFixture buttonC2;
+    @SwingComponent
+    private JButtonFixture buttonC3;
+    @SwingComponent
+    private JButtonFixture buttonC4;
+    @SwingComponent
+    private JButtonFixture buttonC5;
+    @SwingComponent
+    private JButtonFixture buttonC6;
+    @SwingComponent
+    private JButtonFixture buttonD1;
+    @SwingComponent
+    private JButtonFixture buttonD2;
+    @SwingComponent
+    private JButtonFixture buttonD3;
+    @SwingComponent
+    private JButtonFixture buttonD4;
+    @SwingComponent
+    private JButtonFixture buttonD5;
+    @SwingComponent
+    private JButtonFixture buttonD6;
+    @SwingComponent
+    private JButtonFixture buttonE1;
+    @SwingComponent
+    private JButtonFixture buttonE2;
+    @SwingComponent
+    private JButtonFixture buttonE3;
+    @SwingComponent
+    private JButtonFixture buttonE4;
+    @SwingComponent
+    private JButtonFixture buttonE5;
+    @SwingComponent
+    private JButtonFixture buttonE6;
+    @SwingComponent
+    private JButtonFixture buttonF1;
+    @SwingComponent
+    private JButtonFixture buttonF2;
+    @SwingComponent
+    private JButtonFixture buttonF3;
+    @SwingComponent
+    private JButtonFixture buttonF4;
+    @SwingComponent
+    private JButtonFixture buttonF5;
+    @SwingComponent
+    private JButtonFixture buttonF6;
+    @SwingComponent
+    private JButtonFixture buttonG1;
+    @SwingComponent
+    private JButtonFixture buttonG2;
+    @SwingComponent
+    private JButtonFixture buttonG3;
+    @SwingComponent
+    private JButtonFixture buttonG4;
+    @SwingComponent
+    private JButtonFixture buttonG5;
+    @SwingComponent
+    private JButtonFixture buttonG6;
+    @SwingComponent
+    private JButtonFixture buttonReset;
+
+    private static final List<JButton> buttons = new ArrayList<>();
+    private static final List<JButtonFixture> buttonFixtures = new ArrayList<>();
+    private static String[][] expectedArray;
+
+    @DynamicTest(feedback = "Cells should be visible")
+    CheckResult test1() {
+        Map<String, JButtonFixture> cells = cells();
+        cells.forEach((label, button) -> {
+            requireVisible(button);
+            buttons.add(button.target());
+            buttonFixtures.add(button);
+        });
+        return correct();
+    }
+
+    @DynamicTest(feedback = "Cells should be enabled")
     CheckResult test2() {
-        String[] checkHorizontalO = {"1", "2", "3", "4", "5", "6", "7", "1", "2", "1",
-                "3", "1", "4", "7", "5"};
-        TestedProgram main = new TestedProgram();
-        checkWinner(main, checkHorizontalO);
-        return CheckResult.correct();
+        buttonFixtures.forEach(this::requireEnabled);
+        return correct();
     }
 
-    @DynamicTest
+    @DynamicTest(feedback = "All cells should be empty before the game starts")
     CheckResult test3() {
-        String[] checkHorizontalX = {"1", "2", "1", "3", "1", "4", "7", "5"};
-        TestedProgram main = new TestedProgram();
-        checkWinner(main, checkHorizontalX);
-        return CheckResult.correct();
+        buttonFixtures.forEach(button -> button.requireText(EMPTY_CELL));
+        return correct();
     }
 
-    @DynamicTest
+    private int[] cols;
+    private int[] rows;
+
+    @DynamicTest(feedback = "The board should have exactly three rows and columns")
     CheckResult test4() {
-        String[] checkVerticalO = {"6", "7", "6", "7", "6", "7", "6"};
-        TestedProgram main = new TestedProgram();
-        checkWinner(main, checkVerticalO);
-        return CheckResult.correct();
+        cols = buttons.stream().mapToInt(JButton::getX).distinct().sorted().toArray();
+        rows = buttons.stream().mapToInt(JButton::getY).distinct().sorted().toArray();
+
+        assertEquals(7, cols.length,
+                "The board should have exactly 7 columns. "
+                        + "The column coordinates are {0}, "
+                        + "the buttons have {1} different column coordinates",
+                Arrays.toString(cols), cols.length);
+
+        assertEquals(6, rows.length,
+                "The board should have exactly 6 rows. "
+                        + "The row coordinates are {0}, "
+                        + "The buttons have {0} different row coordinates",
+                Arrays.toString(rows), rows.length);
+
+        return correct();
     }
 
-    @DynamicTest
+    private static final String[] ROW_NAME = new String[]{"sixth", "fifth", "fourth", "third", "second", "first"};
+    private static final String[] COL_NAME = new String[]{"first", "second", "third", "fourth", "fifth", "sixth", "seventh"};
+
+    @DynamicTest(feedback = "The buttons are incorrectly placed on the board")
     CheckResult test5() {
-        String[] checkVerticalX = {"3", "4", "3", "3", "4", "3", "4", "3", "4", "3"};
-        TestedProgram main = new TestedProgram();
-        checkWinner(main, checkVerticalX);
-        return CheckResult.correct();
+        range(0, NUM_OF_ROWS * NUM_OF_COLUMNS).forEach(index -> {
+
+            assertEquals(rows[index / NUM_OF_COLUMNS], buttons.get(index).getY(),
+                    "The button {0} should be located in the {1} row, with the bottom " +
+                            "row being the first row",
+                    buttons.get(index).getName(), ROW_NAME[index / NUM_OF_COLUMNS]);
+
+            assertEquals(cols[index % NUM_OF_COLUMNS], buttons.get(index).getX(),
+                    "The button {0} should be located in the {1} column, with the leftmost " +
+                            "column being the first column",
+                    buttons.get(index).getName(), COL_NAME[index % NUM_OF_COLUMNS]);
+        });
+
+        return correct();
     }
 
-    @DynamicTest
+    @DynamicTest(feedback = "Add a JButton with the name of 'ButtonReset' and enable it")
     CheckResult test6() {
-        String[] checkDiagonalO = {"3", "4", "4", "5", "5", "6", "5", "6", "6", "1", "6"};
-        TestedProgram main = new TestedProgram();
-        checkWinner(main, checkDiagonalO);
-        return CheckResult.correct();
+        buttonReset.requireEnabled();
+        return correct();
     }
 
-    @DynamicTest
+    @DynamicTest(feedback = "After the first click on the A1 cell, this cell should contain the X symbol.")
     CheckResult test7() {
-        TestedProgram main = new TestedProgram();
-        String[] checkDiagonalX = {"7", "7", "6", "6", "5", "6", "5", "4", "5", "5", "4",
-                "4", "4", "4"};
-        checkWinner(main, checkDiagonalX);
-        return CheckResult.correct();
+        try {
+            buttonA1.click();
+            buttonA1.requireText(MARK_X);
+            return correct();
+        } catch (Throwable ex) {
+            if (OsCheck.getOperatingSystemType() == OsCheck.OSType.MacOS) {
+                return wrong(
+                        "Please, make sure that Intellij Idea has access to control your mouse and keyboard: \n" +
+                                "go to System Preferences -> Security & Privacy -> Accessibility\n" +
+                                "and grant Intellij IDEA access to control your computer.");
+            }
+            throw ex;
+        }
     }
 
-    private static void checkWinner(TestedProgram main, String[] winCondition) {
-        String output = main.start().strip().toLowerCase();
-        String[][] gameBoard = getGameBoard(output);
-        String[][] testBoard = createTestBoard();
-        player1 = true;
-        int length = winCondition.length;
+    @DynamicTest(feedback = "After the second click on the A2 cell, this cell should contain the O symbol.")
+    CheckResult test8() {
+        buttonA2.click();
+        buttonA2.requireText(MARK_O);
+        return correct();
+    }
 
-        for (String string: winCondition) {
-            output = main.execute(string).strip().toLowerCase();
-            gameBoard = getGameBoard(output);
-            updateTestBoard(testBoard, Integer.parseInt(string));
-            compareBoards(gameBoard, testBoard);
-            if (--length > 0) {
-                player1 = !player1;
-                if (checkPlayer(output)) {
-                    throw new WrongAnswer("Make sure to alternate player turn properly. Request player 1 " +
-                            "or player 2 to input column depending on turn.");
+    @DynamicTest(feedback = "The Reset button should clear the board")
+    CheckResult test9() {
+        buttonReset.click();
+        buttonFixtures.forEach(cell -> cell.requireText(EMPTY_CELL));
+        return correct();
+    }
+
+    @DynamicTest(feedback = "Clicking on a cell in an already full column should do nothing")
+    CheckResult test10() {
+        initializeExpectedArray();
+        for (int clickCount = 0; clickCount < 8; clickCount++) {
+            buttonA6.click();
+            updateExpectedArrayFromButtonClicked(buttonA6.target());
+            String[][] actualArray = getActualArray();
+            for (int i = 0; i < NUM_OF_ROWS; i++) {
+                for (int j = 0; j < NUM_OF_COLUMNS; j++) {
+                    assertEquals(expectedArray[i][j], actualArray[i][j],
+                            "The text for the cell {0}{1} should be \"{2}\" " +
+                                    "but is instead \"{3}\"", (char) ('A' + j), NUM_OF_ROWS - i, expectedArray[i][j], actualArray[i][j]);
                 }
             }
         }
+        return correct();
+    }
 
-        if (checkPlayer(output) && (!output.contains("win") || !output.contains("won"))) {
-            throw new WrongAnswer("Make sure your program prints \"Player X wins!\" after a player gets four in a row" +
-                    " where X is 1 or 2 depending on who won.");
-        }
-        if (!main.isFinished()) {
-            throw new WrongAnswer("Make sure to end program after game ends.");
+    @DynamicTest(feedback = "Incorrect state of board during play or unable to identify win condition correctly")
+    CheckResult test11() {
+            List<int[]> winConditions = winConditions();
+            for (int[] winCondition:
+                    winConditions) {
+                buttonReset.click();
+                initializeExpectedArray();
+                for (int columnToClick :
+                        winCondition) {
+                    for (JButtonFixture button :
+                            buttonFixtures) {
+                        if (getColumnFromJButton(button.target()) == columnToClick) {
+                            button.click();
+                            updateExpectedArrayFromButtonClicked(button.target());
+                            String[][] actualArray = getActualArray();
+                            for (int i = 0; i < NUM_OF_ROWS; i++) {
+                                for (int j = 0; j < NUM_OF_COLUMNS; j++) {
+                                    assertEquals(expectedArray[i][j], actualArray[i][j],
+                                            "The text for the cell {0}{1} should be \"{2}\" " +
+                                                    "but is instead \"{3}\"", (char) ('A' + j), NUM_OF_ROWS - i, expectedArray[i][j], actualArray[i][j]);
+                                }
+                            }
+                            break;
+                        }
+                    }
+                }
+                checkColorOfCells(winConditions.indexOf(winCondition));
+            }
+            return correct();
+    }
+
+    @DynamicTest(feedback = "Clicking on any cell after the game has been won (before resetting) should do nothing")
+    CheckResult test12() {
+        buttonFixtures.forEach(button -> {
+            button.click();
+            String[][] actualArray = getActualArray();
+            for (int i = 0; i < NUM_OF_ROWS; i++) {
+                for (int j = 0; j < NUM_OF_COLUMNS; j++) {
+                    assertEquals(expectedArray[i][j], actualArray[i][j],
+                            "The text for the cell {0}{1} should be \"{2}\" " +
+                                    "but is instead \"{3}\"",  (char) ('A' + j), NUM_OF_ROWS - i, expectedArray[i][j], actualArray[i][j]);
+                }
+            }
+        });
+        return correct();
+    }
+
+    private static void assertEquals(
+            final Object expected,
+            final Object actual,
+            final String error,
+            final Object... args) {
+
+        if (!expected.equals(actual)) {
+            final var feedback = MessageFormat.format(error, args);
+            throw new WrongAnswer(feedback);
         }
     }
 
-    private static void checkErrors(String output) {
-        if (!output.contains("invalid") || output.contains("full") || output.contains("filled")) {
-            throw new WrongAnswer("Make sure you print an error statement containing the word " +
-                    "\"invalid\" for invalid input. Should be a different error statement than when column is full.");
+    private Map<String, JButtonFixture> cells() {
+        return mapOf(
+                "A6", buttonA6, "B6", buttonB6, "C6", buttonC6, "D6", buttonD6, "E6", buttonE6, "F6", buttonF6, "G6", buttonG6,
+                "A5", buttonA5, "B5", buttonB5, "C5", buttonC5, "D5", buttonD5, "E5", buttonE5, "F5", buttonF5, "G5", buttonG5,
+                "A4", buttonA4, "B4", buttonB4, "C4", buttonC4, "D4", buttonD4, "E4", buttonE4, "F4", buttonF4, "G4", buttonG4,
+                "A3", buttonA3, "B3", buttonB3, "C3", buttonC3, "D3", buttonD3, "E3", buttonE3, "F3", buttonF3, "G3", buttonG3,
+                "A2", buttonA2, "B2", buttonB2, "C2", buttonC2, "D2", buttonD2, "E2", buttonE2, "F2", buttonF2, "G2", buttonG2,
+                "A1", buttonA1, "B1", buttonB1, "C1", buttonC1, "D1", buttonD1, "E1", buttonE1, "F1", buttonF1, "G1", buttonG1);
+    }
+
+    private List<int[]> winConditions() {
+        List<int[]> winConditions = new ArrayList<>();
+
+        int[] checkHorizontalX = {0, 1, 2, 3, 4, 5, 6, 0, 1, 0,
+                2, 0, 3, 6, 4};
+        int[] checkHorizontalO = {0, 1, 0, 2, 0, 3, 6, 4};
+        int[] checkVerticalX = {5, 6, 5, 6, 5, 6, 5};
+        int[] checkVerticalO = {2, 3, 2, 2, 3, 2, 3, 2, 3, 2};
+        int[] checkDiagonalX = {2, 3, 3, 4, 4, 5, 4, 5, 5, 0, 5};
+        int[] checkDiagonalO = {6, 6, 5, 5, 4, 5, 4, 3, 4, 4, 3,
+                3, 3, 3};
+
+        winConditions.add(checkHorizontalX);
+        winConditions.add(checkHorizontalO);
+        winConditions.add(checkVerticalX);
+        winConditions.add(checkVerticalO);
+        winConditions.add(checkDiagonalX);
+        winConditions.add(checkDiagonalO);
+
+        return winConditions;
+    }
+
+    private void checkColorOfCells(int indexOfWinCondition) {
+        Color baselineColor;
+        Color winningColor;
+        List<JButtonFixture> winningCells = new ArrayList<>();
+
+        switch (indexOfWinCondition) {
+            case 0:
+                baselineColor = buttonA1.target().getBackground();
+                winningColor = buttonB2.target().getBackground();
+                winningCells.add(buttonB2);
+                winningCells.add(buttonC2);
+                winningCells.add(buttonD2);
+                winningCells.add(buttonE2);
+                break;
+            case 1:
+                baselineColor = buttonA1.target().getBackground();
+                winningColor = buttonB1.target().getBackground();
+                winningCells.add(buttonB1);
+                winningCells.add(buttonC1);
+                winningCells.add(buttonD1);
+                winningCells.add(buttonE1);
+                break;
+            case 2:
+                baselineColor = buttonG1.target().getBackground();
+                winningColor = buttonF1.target().getBackground();
+                winningCells.add(buttonF1);
+                winningCells.add(buttonF2);
+                winningCells.add(buttonF3);
+                winningCells.add(buttonF4);
+                break;
+            case 3:
+                baselineColor = buttonC1.target().getBackground();
+                winningColor = buttonC6.target().getBackground();
+                winningCells.add(buttonC6);
+                winningCells.add(buttonC5);
+                winningCells.add(buttonC4);
+                winningCells.add(buttonC3);
+                break;
+            case 4:
+                baselineColor = buttonD1.target().getBackground();
+                winningColor = buttonC1.target().getBackground();
+                winningCells.add(buttonC1);
+                winningCells.add(buttonD2);
+                winningCells.add(buttonE3);
+                winningCells.add(buttonF4);
+                break;
+            case 5:
+                baselineColor = buttonG1.target().getBackground();
+                winningColor = buttonG2.target().getBackground();
+                winningCells.add(buttonG2);
+                winningCells.add(buttonF3);
+                winningCells.add(buttonE4);
+                winningCells.add(buttonD5);
+                break;
+            default:
+                throw new IndexOutOfBoundsException("Error in test checking color for win conditions");
         }
 
-        if (!output.contains("player 1") && !output.contains("player1")) {
-            throw new WrongAnswer("Make sure your program requests additional input from the same player " +
-                    "after invalid input is entered.");
+        for (JButtonFixture button:
+             buttonFixtures) {
+            if (winningCells.contains(button)) {
+                assertEquals(winningColor, button.target().getBackground(), "{0} should have the winning color: {1} " +
+                        "but is instead has the color {2}", button.target().getName(), winningColor, button.target().getBackground());
+            } else {
+                assertEquals(baselineColor, button.target().getBackground(), "{0} should have the baseline color: " +
+                        "{1} but instead has the color {2}", button.target().getName(), baselineColor, button.target().getBackground());
+            }
         }
     }
 
-    private static void checkFull(String output) {
-        if (!output.contains("full") && !output.contains("filled")) {
-            throw new WrongAnswer("Make sure to print an error statement containing the word \"full\" " +
-                    "if user selects a column that is already full. This error statement should be " +
-                    "different than with invalid input.");
+    private static <String, JButtonFixture> Map<String, JButtonFixture> mapOf(Object... keyValues) {
+        Map<String, JButtonFixture> map = new LinkedHashMap<>();
+
+        for (int index = 0; index < keyValues.length / 2; index++) {
+            map.put((String) keyValues[index * 2], (JButtonFixture) keyValues[index * 2 + 1]);
         }
+
+        return map;
     }
 
-    private static boolean checkPlayer(String output) {
-        int player = player1 ? 1 : 2;
-        int other = player1 ? 2 : 1;
-        return !output.contains("player " + player) && !output.contains("player" + player)
-                || output.contains("player " + other) || output.contains("player" + other);
+    private static String updatePlayer() {
+        return playerCount++ % 2 == 0 ? MARK_X : MARK_O;
     }
 
-    private static String[][] createTestBoard() {
-        String[][] board = new String[6][7];
-        for (int i = 0; i < 6; i++) {
-            Arrays.fill(board[i], "_");
-        }
-        return board;
-    }
 
-    private static void updateTestBoard(String[][] board, int column) {
-        column -= 1;
-        String piece = player1 ? "o" : "x";
-        for (int i = 5; i >= 0; i--) {
-            if (Objects.equals(board[i][column], "_")) {
-                board[i][column] = piece;
+    private static void updateExpectedArrayFromButtonClicked(JButton button) {
+        int column = getColumnFromJButton(button);
+        for (int i = NUM_OF_ROWS - 1; i >= 0; i--) {
+            if (Objects.equals(expectedArray[i][column], EMPTY_CELL)) {
+                expectedArray[i][column] = updatePlayer();
                 break;
             }
         }
     }
 
-    private static void compareBoards(String[][] gameBoard, String[][] testBoard) {
-        for (int i = 0; i < 6; i++) {
-            for (int j = 0; j < 7; j++) {
-                if (!Objects.equals(gameBoard[i][j], testBoard[i][j])) {
-                    throw new WrongAnswer("Make sure to respond to user input correctly. Change '_' to the letter " +
-                            "'O' or 'X', depending on player turn, in chosen column starting with the first available " +
-                            "row from the bottom. Make sure all other parts of the board are not changed.");
-                }
-            }
+    private static void initializeExpectedArray() {
+        expectedArray = new String[NUM_OF_ROWS][NUM_OF_COLUMNS];
+        for (String[] array: expectedArray) {
+            Arrays.fill(array, EMPTY_CELL);
         }
+        playerCount = 0;
     }
 
-    private static boolean isBoardEmpty(String[][] board) {
-        for (int i = 0; i < 6; i++) {
-            for (int j = 0; j < 7; j++) {
-                if (!Objects.equals(board[i][j], "_")) {
-                    return false;
-                }
-            }
-        }
-        return true;
+    private static String[][] getActualArray() {
+        String[][] actualArray = new String[NUM_OF_ROWS][NUM_OF_COLUMNS];
+        buttons.forEach(button -> {
+            actualArray[getRowFromJButton(button)][getColumnFromJButton(button)]
+                    = button.getText();
+        });
+        return actualArray;
     }
 
-    private static String[][] getGameBoard(String output) {
-        String[][] board = new String[6][7];
-        String[] outputByLine = output.split("\n");
-        WrongAnswer wrongAnswer = new WrongAnswer("Can't parse game board. Make sure to format like in examples. " +
-                "Make sure board is printed at the start and after each turn.");
-
-        try {
-            int startIndex = 0;
-            while (!gameBoardPrinted(outputByLine[startIndex])) {
-                startIndex++;
-                if (startIndex > 1000) {
-                    throw wrongAnswer;
-                }
-            }
-            startIndex++;
-
-            for (int i = 0; i < 6; i++) {
-                String temp = outputByLine[startIndex++].strip();
-                String[] outputByCharacter = temp.split(" ");
-                if (outputByCharacter.length != 7) {
-                    throw wrongAnswer;
-                }
-                board[i] = outputByCharacter;
-            }
-        } catch (IndexOutOfBoundsException e) {
-            throw wrongAnswer;
-        }
-        return board;
+    private static int getColumnFromJButton(JButton button) {
+        return buttons.indexOf(button) % NUM_OF_COLUMNS;
     }
 
-    private static boolean gameBoardPrinted(String output) {
-        return  (output.contains("1") && output.contains("2")
-                && output.contains("3") && output.contains("4")
-                && output.contains("5") && output.contains("6")
-                && output.contains("7"));
+    private static int getRowFromJButton(JButton button) {
+        return buttons.indexOf(button) / NUM_OF_COLUMNS;
     }
 }
