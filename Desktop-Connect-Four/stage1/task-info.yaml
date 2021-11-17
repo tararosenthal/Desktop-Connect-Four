@@ -6,3 +6,13 @@ files:
   visible: false
 - name: src/connect4/Connect4.java
   visible: true
+- name: src/connect4/Board.java
+  visible: true
+- name: src/connect4/BoardStatus.java
+  visible: true
+- name: src/connect4/Cell.java
+  visible: true
+- name: src/connect4/InARowUtils.java
+  visible: true
+- name: src/connect4/StatusBar.java
+  visible: true
