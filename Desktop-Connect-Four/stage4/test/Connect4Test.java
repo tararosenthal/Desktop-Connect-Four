@@ -445,7 +445,7 @@ public class Connect4Test extends SwingTest {
         }
     }
 
-    private static <String, JButtonFixture> Map<String, JButtonFixture> mapOf(Object... keyValues) {
+    private static Map<String, JButtonFixture> mapOf(Object... keyValues) {
         Map<String, JButtonFixture> map = new LinkedHashMap<>();
 
         for (int index = 0; index < keyValues.length / 2; index++) {

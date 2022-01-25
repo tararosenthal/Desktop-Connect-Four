@@ -6,9 +6,10 @@ import org.hyperskill.hstest.testcase.CheckResult;
 import org.hyperskill.hstest.testing.swing.SwingComponent;
 import connect4.Connect4;
 
-import javax.swing.JButton;
+import javax.swing.*;
 import java.text.MessageFormat;
 import java.util.*;
+import java.util.List;
 
 import static java.util.stream.IntStream.range;
 import static org.hyperskill.hstest.testcase.CheckResult.correct;
@@ -211,13 +212,11 @@ public class Connect4Test extends SwingTest {
         range(0, NUM_OF_ROWS * NUM_OF_COLUMNS).forEach(index -> {
 
             assertEquals(rows[index / NUM_OF_COLUMNS], buttons.get(index).getY(),
-                    "The button {0} should be located in the {1} row, with the bottom " +
-                            "row being the first row",
+                    "The button {0} should be located in the {1} row, with the bottom row being the first row",
                     buttons.get(index).getName(), ROW_NAME[index / NUM_OF_COLUMNS]);
 
             assertEquals(cols[index % NUM_OF_COLUMNS], buttons.get(index).getX(),
-                    "The button {0} should be located in the {1} column, with the leftmost " +
-                            "column being the first column",
+                    "The button {0} should be located in the {1} column, with the leftmost column being the first column",
                     buttons.get(index).getName(), COL_NAME[index % NUM_OF_COLUMNS]);
         });
 
@@ -227,8 +226,10 @@ public class Connect4Test extends SwingTest {
     @DynamicTest(feedback = "After clicking on a cell, it should fill the first open cell in that column either X or O, " +
             "starting with X and alternating with every click until the column is full")
     CheckResult test6() {
+        initializeExpectedArray();
         try {
-            initializeExpectedArray();
+            frame.toFront();
+            frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
             cells.forEach((label, button) -> {
                 button.click();
                 updateExpectedArrayFromButtonClicked(button.target());
@@ -275,7 +276,7 @@ public class Connect4Test extends SwingTest {
                 "A1", buttonA1, "B1", buttonB1, "C1", buttonC1, "D1", buttonD1, "E1", buttonE1, "F1", buttonF1, "G1", buttonG1);
     }
 
-    private static <String, JButtonFixture> Map<String, JButtonFixture> mapOf(Object... keyValues) {
+    private static Map<String, JButtonFixture> mapOf(Object... keyValues) {
         Map<String, JButtonFixture> map = new LinkedHashMap<>();
 
         for (int index = 0; index < keyValues.length / 2; index++) {

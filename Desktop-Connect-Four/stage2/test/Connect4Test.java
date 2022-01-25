@@ -6,7 +6,7 @@ import org.hyperskill.hstest.testcase.CheckResult;
 import org.hyperskill.hstest.testing.swing.SwingComponent;
 import connect4.Connect4;
 
-import javax.swing.JButton;
+import javax.swing.*;
 import java.text.MessageFormat;
 import java.util.*;
 
@@ -211,11 +211,11 @@ public class Connect4Test extends SwingTest {
 
             assertEquals(rows[index / NUM_OF_COLUMNS], buttons.get(index).getY(),
                     "The button {0} should be located in the {1} row, with the bottom row being the first row",
-                    buttons.get(index).getText(), ROW_NAME[index / NUM_OF_COLUMNS]);
+                    buttons.get(index).getName(), ROW_NAME[index / NUM_OF_COLUMNS]);
 
             assertEquals(cols[index % NUM_OF_COLUMNS], buttons.get(index).getX(),
                     "The button {0} should be located in the {1} column, with the leftmost column being the first column",
-                    buttons.get(index).getText(), COL_NAME[index % NUM_OF_COLUMNS]);
+                    buttons.get(index).getName(), COL_NAME[index % NUM_OF_COLUMNS]);
         });
 
         return correct();
@@ -225,6 +225,7 @@ public class Connect4Test extends SwingTest {
             "starting with X and alternating with every click on a new cell")
     CheckResult test6() {
         try {
+            frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
             cells.forEach((label, button) -> {
                 button.click();
                 button.requireText(getPlayer());
@@ -263,7 +264,7 @@ public class Connect4Test extends SwingTest {
                 "A1", buttonA1, "B1", buttonB1, "C1", buttonC1, "D1", buttonD1, "E1", buttonE1, "F1", buttonF1, "G1", buttonG1);
     }
 
-    private static <String, JButtonFixture> Map<String, JButtonFixture> mapOf(Object... keyValues) {
+    private static Map<String, JButtonFixture> mapOf(Object... keyValues) {
         Map<String, JButtonFixture> map = new LinkedHashMap<>();
 
         for (int index = 0; index < keyValues.length / 2; index++) {

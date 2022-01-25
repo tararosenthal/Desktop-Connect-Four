@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="Connect4Test" tests="1" skipped="0" failures="0" errors="0" timestamp="2021-10-28T19:54:29" hostname="DESKTOP-02MLGRN" time="12.724">
+<testsuite name="Connect4Test" tests="1" skipped="0" failures="0" errors="0" timestamp="2022-01-25T08:04:42" hostname="DESKTOP-02MLGRN" time="12.905">
   <properties/>
-  <testcase name="start" classname="Connect4Test" time="12.724"/>
+  <testcase name="start" classname="Connect4Test" time="12.905"/>
   <system-out><![CDATA[?[1;31m
 Start test 1?[0m
 ?[1;31m
