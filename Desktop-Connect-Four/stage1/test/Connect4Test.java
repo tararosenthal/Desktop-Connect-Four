@@ -1,10 +1,10 @@
+import connect4.Connect4;
 import org.assertj.swing.fixture.JButtonFixture;
 import org.hyperskill.hstest.dynamic.DynamicTest;
 import org.hyperskill.hstest.exception.outcomes.WrongAnswer;
 import org.hyperskill.hstest.stage.SwingTest;
 import org.hyperskill.hstest.testcase.CheckResult;
 import org.hyperskill.hstest.testing.swing.SwingComponent;
-import connect4.Connect4;
 
 import javax.swing.*;
 import java.text.MessageFormat;
@@ -109,8 +109,16 @@ public class Connect4Test extends SwingTest {
 
     private final List<JButton> buttons = new ArrayList<>();
 
-    @DynamicTest(feedback = "Buttons should have a name (ButtonA1..ButtonG6), be visible, and have the following labels: 'A1'...'F7'")
+    @DynamicTest(feedback = "The window should exit on close.")
     CheckResult test1() {
+        assertEquals(frame.getDefaultCloseOperation(), JFrame.EXIT_ON_CLOSE, "The default close operation is {0}" +
+                        " but should be {1}", defaultCloseOperationIntToString(frame.getDefaultCloseOperation()),
+                defaultCloseOperationIntToString(JFrame.EXIT_ON_CLOSE));
+        return correct();
+    }
+
+    @DynamicTest(feedback = "Buttons should have a name (ButtonA1..ButtonG6), be visible, and have the following labels: 'A1'...'G6'")
+    CheckResult test2() {
         Map<String, JButtonFixture> board = mapOf(
                 "A6", buttonA6, "B6", buttonB6, "C6", buttonC6, "D6", buttonD6, "E6", buttonE6, "F6", buttonF6, "G6", buttonG6,
                 "A5", buttonA5, "B5", buttonB5, "C5", buttonC5, "D5", buttonD5, "E5", buttonE5, "F5", buttonF5, "G5", buttonG5,
@@ -120,7 +128,7 @@ public class Connect4Test extends SwingTest {
                 "A1", buttonA1, "B1", buttonB1, "C1", buttonC1, "D1", buttonD1, "E1", buttonE1, "F1", buttonF1, "G1", buttonG1);
 
         board.forEach((label, button) -> {
-            requireVisible(button);
+            button.requireVisible();
             button.requireText(label);
             buttons.add(button.target());
         });
@@ -132,7 +140,7 @@ public class Connect4Test extends SwingTest {
     private int[] rows;
 
     @DynamicTest(feedback = "The board should have exactly six rows and seven columns")
-    CheckResult test2() {
+    CheckResult test3() {
         cols = buttons.stream().mapToInt(JButton::getX).distinct().sorted().toArray();
         rows = buttons.stream().mapToInt(JButton::getY).distinct().sorted().toArray();
 
@@ -155,7 +163,7 @@ public class Connect4Test extends SwingTest {
     private static final String[] COL_NAME = new String[]{"first", "second", "third", "fourth", "fifth", "sixth", "seventh"};
 
     @DynamicTest(feedback = "The buttons are incorrectly placed on the board")
-    CheckResult test3() {
+    CheckResult test4() {
         range(0, NUM_OF_ROWS * NUM_OF_COLUMNS).forEach(index -> {
 
             assertEquals(rows[index / NUM_OF_COLUMNS], buttons.get(index).getY(),
@@ -191,5 +199,20 @@ public class Connect4Test extends SwingTest {
 
         return map;
     }
-}
 
+    private static String defaultCloseOperationIntToString(int defaultCloseOperation) {
+        switch (defaultCloseOperation) {
+            case 0:
+                return "Do Nothing On Close";
+            case 1:
+                return "Hide On Close";
+            case 2:
+                return "Dispose On Close";
+            case 3:
+                return "Exit On Close";
+            default:
+                throw new IllegalArgumentException("Error in Default Close Operation test, int value of default " +
+                        "close operation not present as constant");
+        }
+    }
+}

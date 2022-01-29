@@ -1,10 +1,10 @@
+import connect4.Connect4;
 import org.assertj.swing.fixture.JButtonFixture;
 import org.hyperskill.hstest.dynamic.DynamicTest;
 import org.hyperskill.hstest.exception.outcomes.WrongAnswer;
 import org.hyperskill.hstest.stage.SwingTest;
 import org.hyperskill.hstest.testcase.CheckResult;
 import org.hyperskill.hstest.testing.swing.SwingComponent;
-import connect4.Connect4;
 
 import javax.swing.*;
 import java.text.MessageFormat;
@@ -13,8 +13,6 @@ import java.util.*;
 import static java.util.stream.IntStream.range;
 import static org.hyperskill.hstest.testcase.CheckResult.correct;
 import static org.hyperskill.hstest.testcase.CheckResult.wrong;
-
-
 
 
 class OsCheck {
@@ -161,7 +159,7 @@ public class Connect4Test extends SwingTest {
     CheckResult test1() {
         cells = cells();
         cells.forEach((label, button) -> {
-            requireVisible(button);
+            button.requireVisible();
             buttons.add(button.target());
         });
         return correct();
@@ -169,11 +167,11 @@ public class Connect4Test extends SwingTest {
 
     @DynamicTest(feedback = "Cells should be enabled")
     CheckResult test2() {
-        cells.forEach((label, button) -> requireEnabled(button));
+        cells.forEach((label, button) -> button.requireEnabled());
         return correct();
     }
 
-    @DynamicTest(feedback = "All cells should be empty before the game starts")
+    @DynamicTest(feedback = "All cells should display a single space (\" \") before the game starts")
     CheckResult test3() {
         cells.forEach((label, button) -> button.requireText(EMPTY_CELL));
         return correct();
@@ -182,7 +180,7 @@ public class Connect4Test extends SwingTest {
     private int[] cols;
     private int[] rows;
 
-    @DynamicTest(feedback = "The board should have exactly three rows and columns")
+    @DynamicTest(feedback = "The board should have exactly six rows and seven columns")
     CheckResult test4() {
         cols = buttons.stream().mapToInt(JButton::getX).distinct().sorted().toArray();
         rows = buttons.stream().mapToInt(JButton::getY).distinct().sorted().toArray();
@@ -225,7 +223,8 @@ public class Connect4Test extends SwingTest {
             "starting with X and alternating with every click on a new cell")
     CheckResult test6() {
         try {
-            frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+            frame.setExtendedState(JFrame.NORMAL);
+            frame.toFront();
             cells.forEach((label, button) -> {
                 button.click();
                 button.requireText(getPlayer());
